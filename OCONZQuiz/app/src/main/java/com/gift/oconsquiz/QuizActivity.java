@@ -1,3 +1,40 @@
+int index = 0;
+int score = 0;
+
+void loadQuestion() {
+    questionText.setText(questions[index][0]);
+    optionA.setText(questions[index][1]);
+    optionB.setText(questions[index][2]);
+    optionC.setText(questions[index][3]);
+    optionD.setText(questions[index][4]);
+}
+
+View.OnClickListener answerClick = v -> {
+    Button b = (Button) v;
+
+    if (b.getText().toString().equals(questions[index][5])) {
+        score++;
+    }
+
+    index++;
+
+    if (index == questions.length) {
+        Intent i = new Intent(QuizActivity.this, ResultActivity.class);
+        i.putExtra("score", score);
+        startActivity(i);
+        finish();
+    } else {
+        loadQuestion();
+    }
+};
+
+optionA.setOnClickListener(answerClick);
+optionB.setOnClickListener(answerClick);
+optionC.setOnClickListener(answerClick);
+optionD.setOnClickListener(answerClick);
+
+loadQuestion();
+
 String[][] questions = {
     {"What is the longest bone in the body?", "Femur", "Tibia", "Humerus", "Fibula", "Femur"},
     {"Where is the cerebellum located?", "Brain", "Spine", "Heart", "Liver", "Brain"},
